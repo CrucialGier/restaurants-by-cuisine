@@ -91,10 +91,6 @@ namespace CuisineFinder.Objects
 
     SqlCommand cmd = new SqlCommand("INSERT INTO restaurants (cuisine_id, name) OUTPUT INSERTED.id VALUES (@RestaurantCuisineId, @RestaurantName);", conn);
 
-    SqlParameter idParameter = new SqlParameter();
-    idParameter.ParameterName = "@RestaurantId";
-    idParameter.Value = this.GetId();
-
     SqlParameter nameParameter = new SqlParameter();
     nameParameter.ParameterName = "@RestaurantName";
     nameParameter.Value = this.GetName();

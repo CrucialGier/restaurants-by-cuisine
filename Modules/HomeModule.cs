@@ -39,26 +39,26 @@ namespace CuisineFinder
         return View["success.cshtml"];
       };
       Post["/restaurants/delete"] = _ => {
-       Restaurant.DeleteAll();
-       return View["cleared.cshtml"];
-       };
-       Post["/cuisines/delete"] = _ => {
+        Restaurant.DeleteAll();
+        return View["cleared.cshtml"];
+      };
+      Post["/cuisines/delete"] = _ => {
         Cuisine.DeleteAll();
         return View["cleared.cshtml"];
-       };
-       Get["/cuisines/{id}"] = parameters => {
-         Dictionary<string, object> model = new Dictionary<string, object>();
-         var SelectedCuisine = Cuisine.Find(parameters.id);
-         var CuisineRestaurants = SelectedCuisine.GetRestaurants();
-         model.Add("cuisine", SelectedCuisine);
-         model.Add("restaurants", CuisineRestaurants);
-         return View["cuisine.cshtml", model];
-       };
-       Get["cuisine/edit/{id}"] = parameters => {
-         Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
-         return View["cuisine_edit.cshtml", SelectedCuisine];
-       };
-       Patch["cuisine/edit/{id}"] = parameters => {
+      };
+      Get["/cuisines/{id}"] = parameters => {
+        Dictionary<string, object> model = new Dictionary<string, object>();
+        var SelectedCuisine = Cuisine.Find(parameters.id);
+        var CuisineRestaurants = SelectedCuisine.GetRestaurants();
+        model.Add("cuisine", SelectedCuisine);
+        model.Add("restaurants", CuisineRestaurants);
+        return View["cuisine.cshtml", model];
+      };
+      Get["cuisine/edit/{id}"] = parameters => {
+        Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
+        return View["cuisine_edit.cshtml", SelectedCuisine];
+      };
+      Patch["cuisine/edit/{id}"] = parameters => {
         Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
         SelectedCuisine.Update(Request.Form["cuisine-name"]);
         return View["success.cshtml"];
