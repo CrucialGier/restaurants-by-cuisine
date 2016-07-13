@@ -1,0 +1,16 @@
+<h1>All Types of Food</h1>
+@if (@Model.Count == 0)
+{
+  <p>There are no food types listed.</p>
+}
+<ul>
+  @foreach (var cuisine in Model)
+  {
+    <li><a href="/cuisines/@cuisine.GetId()">@cuisine.GetName()</a> | <a href="/cuisine/edit/@cuisine.GetId()">Edit</a> | <a href="/cuisine/delete/@cuisine.GetId()">Delete</a></li>
+  }
+</ul>
+<form action="/cuisines/delete" method="post">
+  <button type="submit">Clear all Food Types</button>
+</form>
+<a href="/cuisines/new">Add new Food Type</a>
+<a href="/">Return home</a>

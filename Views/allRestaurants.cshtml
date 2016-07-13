@@ -1,0 +1,19 @@
+<h2> Find Restaurants Near You </h2>
+
+<ul>
+
+@foreach (var restaurant in @Model)
+{
+  <li>@restaurant.GetName()</li>
+}
+
+</ul>
+
+<form action="/allrestaurants" method="post">
+  <label for="newRestaurant">Create A New Restaurant</label>
+  <input id="newRestaurant" name="newRestaurant">
+  <button type="submit">Add Restaurant</button>
+</form>
+<form action="/clearedRestaurants" method="post">
+  <button type="submit">Clear All Restaurants</button>
+</form>
