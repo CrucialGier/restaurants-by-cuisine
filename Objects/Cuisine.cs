@@ -88,9 +88,10 @@ namespace CuisineFinder.Objects
       while(rdr.Read())
       {
         int restaurantId = rdr.GetInt32(0);
-        string restaurantName = rdr.GetString(2);
+        string restaurantName = rdr.GetString(3);
         int restaurantCuisineId = rdr.GetInt32(1);
-        Restaurant newRestaurant = new Restaurant(restaurantCuisineId, restaurantName, restaurantId);
+        string restaurantImage = rdr.GetString(2);
+        Restaurant newRestaurant = new Restaurant(restaurantCuisineId, restaurantName, restaurantImage, restaurantId);
         restaurants.Add(newRestaurant);
       }
       if (rdr != null)

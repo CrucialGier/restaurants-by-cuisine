@@ -34,7 +34,7 @@ namespace CuisineFinder
         return View["restaurant_form.cshtml", AllCuisines];
       };
       Post["/restaurants/new"] = _ => {
-        Restaurant newRestaurant = new Restaurant(Request.Form["cuisine-id"], Request.Form["restaurant-name"]);
+        Restaurant newRestaurant = new Restaurant(Request.Form["cuisine-id"], Request.Form["restaurant-name"], Request.Form["restaurant-image"]);
         newRestaurant.Save();
         return View["success.cshtml"];
       };

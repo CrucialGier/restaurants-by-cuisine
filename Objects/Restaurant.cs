@@ -9,12 +9,14 @@ namespace CuisineFinder.Objects
     private int _id;
     private string _name;
     private int _cuisineId;
+    private string _image;
 
-    public Restaurant(int CuisineId, string Name, int Id = 0)
+    public Restaurant(int CuisineId, string Name, string Image, int Id = 0)
     {
       _id = Id;
       _name = Name;
       _cuisineId = CuisineId;
+      _image = Image;
     }
 
     public override bool Equals(System.Object otherRestaurant)
@@ -29,6 +31,7 @@ namespace CuisineFinder.Objects
           bool idEquality = this.GetId() == newRestaurant.GetId();
           bool nameEquality = this.GetName() == newRestaurant.GetName();
           bool cuisineEquality = this.GetCuisineId() == newRestaurant.GetCuisineId();
+          bool imageEquality = this.GetImage() == newRestaurant.GetImage();
           return (idEquality && nameEquality && cuisineEquality);
         }
     }
@@ -85,6 +88,14 @@ namespace CuisineFinder.Objects
     {
       _cuisineId = newCuisineId;
     }
+    public string GetImage()
+    {
+      return _image;
+    }
+    public void SetImage(string newImage)
+    {
+      _image = newImage;
+    }
   public static List<Restaurant> GetAll()
   {
     List<Restaurant> AllRestaurants = new List<Restaurant>{};
@@ -101,8 +112,9 @@ namespace CuisineFinder.Objects
       int restaurantId = rdr.GetInt32(0);
       int restaurantCuisineId = rdr.GetInt32(1);
       string restaurantName = rdr.GetString(2);
+      string restaurantImage = rdr.GetString(3);
 
-      Restaurant newRestaurant = new Restaurant(restaurantCuisineId, restaurantName, restaurantId);
+      Restaurant newRestaurant = new Restaurant(restaurantCuisineId, restaurantName, restaurantImage, restaurantId);
       AllRestaurants.Add(newRestaurant);
     }
     if (rdr != null)
@@ -121,7 +133,7 @@ namespace CuisineFinder.Objects
     SqlDataReader rdr;
     conn.Open();
 
-    SqlCommand cmd = new SqlCommand("INSERT INTO restaurants (cuisine_id, name) OUTPUT INSERTED.id VALUES (@RestaurantCuisineId, @RestaurantName);", conn);
+    SqlCommand cmd = new SqlCommand("INSERT INTO restaurants (cuisine_id, name, image) OUTPUT INSERTED.id VALUES (@RestaurantCuisineId, @RestaurantName, @RestaurantImage);", conn);
 
     SqlParameter nameParameter = new SqlParameter();
     nameParameter.ParameterName = "@RestaurantName";
@@ -131,9 +143,13 @@ namespace CuisineFinder.Objects
     cuisineIdParameter.ParameterName = "@RestaurantCuisineId";
     cuisineIdParameter.Value = this.GetCuisineId();
 
+    SqlParameter imageParameter = new SqlParameter();
+    imageParameter.ParameterName = "@RestaurantImage";
+    imageParameter.Value = this.GetImage();
+
     cmd.Parameters.Add(nameParameter);
     cmd.Parameters.Add(cuisineIdParameter);
-
+    cmd.Parameters.Add(imageParameter);
 
     rdr = cmd.ExecuteReader();
 
@@ -167,14 +183,16 @@ namespace CuisineFinder.Objects
     int foundRestaurantId = 0;
     string foundRestaurantName = null;
     int foundRestaurantCuisineId = 0;
+    string foundRestaurantImage = null;
 
     while(rdr.Read())
     {
       foundRestaurantId = rdr.GetInt32(0);
       foundRestaurantName = rdr.GetString(2);
       foundRestaurantCuisineId = rdr.GetInt32(1);
+      foundRestaurantImage = rdr.GetString(3);
     }
-    Restaurant foundRestaurant = new Restaurant(foundRestaurantCuisineId, foundRestaurantName, foundRestaurantId);
+    Restaurant foundRestaurant = new Restaurant(foundRestaurantCuisineId, foundRestaurantName, foundRestaurantImage, foundRestaurantId);
 
     if (rdr != null)
     {
