@@ -1,0 +1,12 @@
+<link rel="stylesheet" href="../Content/css/styles.css" media="screen" title="no title" charset="utf-8">
+<h2>@Model["restaurant"].GetName()</h2>
+<ul>
+  @foreach (var review in @Model["reviews"])
+  {
+  <li>
+
+   <span><img src="../Content/img/@review.GetStar()star.jpg" alt="" /></span>-- @review.GetComment()</li>
+  }
+</ul>
+<a href="/restaurants">Back To Restaurant</a>
+<a href="/">Return home</a>

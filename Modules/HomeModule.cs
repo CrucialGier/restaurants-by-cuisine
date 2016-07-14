@@ -54,20 +54,20 @@ namespace CuisineFinder
         model.Add("restaurants", CuisineRestaurants);
         return View["cuisine.cshtml", model];
       };
-      Get["cuisine/edit/{id}"] = parameters => {
+      Get["/cuisine/edit/{id}"] = parameters => {
         Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
         return View["cuisine_edit.cshtml", SelectedCuisine];
       };
-      Patch["cuisine/edit/{id}"] = parameters => {
+      Patch["/cuisine/edit/{id}"] = parameters => {
         Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
         SelectedCuisine.Update(Request.Form["cuisine-name"]);
         return View["success.cshtml"];
       };
-      Get["cuisine/delete/{id}"] = parameters => {
+      Get["/cuisine/delete/{id}"] = parameters => {
         Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
         return View["cuisine_delete.cshtml", SelectedCuisine];
       };
-      Delete["cuisine/delete/{id}"] = parameters => {
+      Delete["/cuisine/delete/{id}"] = parameters => {
         Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
         SelectedCuisine.Delete();
         return View["success.cshtml"];
@@ -80,7 +80,15 @@ namespace CuisineFinder
         var SelectedRestaurant = Restaurant.Find(parameters.id);
         Review newReview = new Review(Request.Form["stars"], Request.Form["restaurant-review"], SelectedRestaurant.GetId());
         newReview.Save();
-        return View["review_success.cshtml", SelectedRestaurant.GetId()];
+        return View["review_success.cshtml", newReview.GetComment()];
+      };
+      Get["/restaurants/{id}"] = parameters => {
+        Dictionary<string, object> model = new Dictionary<string, object>();
+        var SelectedRestaurant = Restaurant.Find(parameters.id);
+        var RestaurantReviews = SelectedRestaurant.GetReviews();
+        model.Add("restaurant", SelectedRestaurant);
+        model.Add("reviews", RestaurantReviews);
+        return View["restaurant.cshtml", model];
       };
     }
   }

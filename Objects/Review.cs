@@ -140,6 +140,7 @@ namespace CuisineFinder.Objects
       }
       return foundReview;
     }
+    
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();

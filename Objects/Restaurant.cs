@@ -32,7 +32,39 @@ namespace CuisineFinder.Objects
           return (idEquality && nameEquality && cuisineEquality);
         }
     }
+    public List<Review> GetReviews()
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
 
+      SqlCommand cmd = new SqlCommand("SELECT * FROM reviews WHERE restaurant_id = @RestaurantId;", conn);
+      SqlParameter restaurantIdParameter = new SqlParameter();
+      restaurantIdParameter.ParameterName = "@RestaurantId";
+      restaurantIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(restaurantIdParameter);
+      rdr = cmd.ExecuteReader();
+
+      List<Review> reviews = new List<Review> {};
+      while(rdr.Read())
+      {
+        int reviewStar = rdr.GetInt32(1);
+        string reviewComment = rdr.GetString(2);
+        int reviewRestaurantId = rdr.GetInt32(3);
+        int reviewId = rdr.GetInt32(0);
+        Review newReview = new Review(reviewStar, reviewComment, reviewRestaurantId, reviewId);
+        reviews.Add(newReview);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return reviews;
+    }
     public int GetId()
     {
       return _id;
