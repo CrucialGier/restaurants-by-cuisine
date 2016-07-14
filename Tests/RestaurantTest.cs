@@ -13,10 +13,7 @@ namespace CuisineFinder.Objects
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=cuisine_database_test;Integrated Security=SSPI;";
     }
 
-    public void Dispose()
-    {
-      Restaurant.DeleteAll();
-    }
+
 
     [Fact]
     public void Test_DatabaseEmptyAtFirst()
@@ -80,6 +77,9 @@ namespace CuisineFinder.Objects
 
       //Act
       Restaurant foundRestaurant = Restaurant.Find(testRestaurant.GetId());
+      Console.WriteLine("testRestaurant: " + testRestaurant.GetId());
+      Console.WriteLine("foundRestaurant: " + foundRestaurant.GetId());
+
 
       //Assert
       Assert.Equal(testRestaurant, foundRestaurant);
@@ -111,35 +111,10 @@ namespace CuisineFinder.Objects
       Assert.Equal(testList, result);
     }
 
-    [Fact]
-    public void Test_SaveAssignsIdToObject()
+
+    public void Dispose()
     {
-      //Arrange
-      Restaurant testRestaurant = new Restaurant(1, "Canadian Burgers");
-      testRestaurant.Save();
-
-      //Act
-      Restaurant savedRestaurant = Restaurant.GetAll()[0];
-
-      int result = savedRestaurant.GetId();
-      int testId = testRestaurant.GetId();
-
-      //Assert
-      Assert.Equal(testId, result);
-    }
-
-    [Fact]
-    public void Test_FindFindsRestaurantInDatabase()
-    {
-      //Arrange
-      Restaurant testRestaurant = new Restaurant(1, "Canadian Burgers");
-      testRestaurant.Save();
-
-      //Act
-      Restaurant foundRestaurant = Restaurant.Find(testRestaurant.GetId());
-
-      //Assert
-      Assert.Equal(testRestaurant, foundRestaurant);
+      Restaurant.DeleteAll();
     }
   }
 }

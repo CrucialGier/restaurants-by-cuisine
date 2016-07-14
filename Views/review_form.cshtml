@@ -1,0 +1,15 @@
+<h1>Add a new Review for @Model.GetName()</h1>
+<form action="/new-review" method="post">
+  <select name="stars">
+    <option value="1">1 Star</option>
+    <option value="2">2 Star</option>
+    <option value="3">3 Star</option>
+    <option value="4">4 Star</option>
+    <option value="5">5 Star</option>
+  </select>
+  <label for="restaurant-review">Review:</label>
+  <input id="restaurant-review" name="restaurant-review" type="text">
+  <button type="submit">Submit Review</button>
+</form>
+<p><a href="/">Back home</a></p>
+<p><a href="/restaurants">View all restaurants</a></p>

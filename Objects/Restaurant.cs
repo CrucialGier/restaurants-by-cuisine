@@ -70,7 +70,7 @@ namespace CuisineFinder.Objects
       int restaurantCuisineId = rdr.GetInt32(1);
       string restaurantName = rdr.GetString(2);
 
-      Restaurant newRestaurant = new Restaurant(restaurantCuisineId, restaurantName);
+      Restaurant newRestaurant = new Restaurant(restaurantCuisineId, restaurantName, restaurantId);
       AllRestaurants.Add(newRestaurant);
     }
     if (rdr != null)
@@ -142,7 +142,7 @@ namespace CuisineFinder.Objects
       foundRestaurantName = rdr.GetString(2);
       foundRestaurantCuisineId = rdr.GetInt32(1);
     }
-    Restaurant foundRestaurant = new Restaurant(foundRestaurantCuisineId, foundRestaurantName);
+    Restaurant foundRestaurant = new Restaurant(foundRestaurantCuisineId, foundRestaurantName, foundRestaurantId);
 
     if (rdr != null)
     {

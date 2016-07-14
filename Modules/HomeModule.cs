@@ -72,6 +72,16 @@ namespace CuisineFinder
         SelectedCuisine.Delete();
         return View["success.cshtml"];
       };
+      Get["/restaurant/review/{id}"] = parameters => {
+        var SelectedRestaurant = Restaurant.Find(parameters.id);
+        return View["review_form.cshtml", SelectedRestaurant];
+      };
+      Post["/new-review/{id}"] = parameters => {
+        var SelectedRestaurant = Restaurant.Find(parameters.id);
+        Review newReview = new Review(Request.Form["stars"], Request.Form["restaurant-review"], SelectedRestaurant.GetId());
+        newReview.Save();
+        return View["review_success.cshtml", SelectedRestaurant.GetId()];
+      };
     }
   }
 }
